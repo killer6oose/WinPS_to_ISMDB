@@ -1,6 +1,12 @@
 # Define the path to the local log file
 $LogFile = "C:\Path\To\Your\Log\File.txt"
 
+# Define your SQL Server credentials
+$SqlServerHostname = "YourServer"
+$DatabaseName = "Ivanti_Prod"
+$SqlUsername = "YourSQLUsername"
+$SqlPassword = "YourSQLPassword"
+
 # Function to log user logins
 function Log-UserLogin {
     param (
@@ -34,9 +40,8 @@ $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument {
     # Get the user with the most logins
     $mostLoginsUser = $loginCounts[0].Name
     
-    # Update the SQL Server (placeholder for actual update)
-    # Replace 'your-connection-string' and 'your-table' with actual values
-    $connectionString = "Server=YourServer;Database=Ivanti_Prod;Integrated Security=False;User ID=YourUserID;Password=YourPassword;"
+    # Update the SQL Server with the user who logged in the most (placeholder for actual update)
+    $connectionString = "Server=$SqlServerHostname;Database=$DatabaseName;User Id=$SqlUsername;Password=$SqlPassword;"
     $query = "UPDATE CI.Computer SET Owner = '$mostLoginsUser'"
     $connection = New-Object System.Data.SqlClient.SqlConnection
     $connection.ConnectionString = $connectionString
